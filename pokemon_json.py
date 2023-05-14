@@ -35,7 +35,7 @@ def get_json_data(url):
 
 # Retrieve and parse data for each Pokemon
 pokemon_data = {}
-for i in range(1, 2): # 151
+for i in range(1, 151): # 151
     #print(i, " of 150    0/4")
     pokemon_url = url + f"pokemon/{i}"
     pokemon_json = get_json_data(pokemon_url)
@@ -56,7 +56,7 @@ with open(data_Pokemon, 'w') as f:
 
 # Retrieve and parse data for each move
 capacite_data = {}
-for i in range(1, 2): # 728
+for i in range(1, 728): # 728
     #print(i, " of 727    1/4")
     move_url = url + f"move/{i}"
     move_json = get_json_data(move_url)
@@ -75,8 +75,9 @@ for i in range(1, 2): # 728
 with open(data_Capacite, 'w') as f:
     json.dump(capacite_data, f)
 
+# Retrieve and parse data for each ability
 talent_data = {}
-for i in range(1, 2): # 233
+for i in range(1, 233): # 233
     ability_url = url + f"ability/{i}"
     ability_json = get_json_data(ability_url)
     if ability_json:
@@ -95,15 +96,13 @@ print("\n\n Talent data: ")
 print(talent_data) # Debug
 
 
-
-
 # Write the talent data to a JSON file
 with open(data_Talent, 'w') as f:
     json.dump(talent_data, f)
 
 # Retrieve and parse data for each capacite_list
 capacite_list_data = {}
-for i in range(1, 2): # 728
+for i in range(1, 728): # 728
     #print(i, " of 727   3/4")
     move_url = url + f"move/{i}"
     move_json = get_json_data(move_url)
