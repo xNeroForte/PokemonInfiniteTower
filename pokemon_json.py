@@ -23,6 +23,7 @@ with open(data_Talent, 'w') as f:
 with open(data_Capacite_list, 'w') as f:
     json.dump(data_Capacite_list, f, allow_nan=True)
 
+
 # Define a function to retrieve and parse JSON data from a URL
 def get_json_data(url):
     response = requests.get(url)
@@ -31,9 +32,11 @@ def get_json_data(url):
     else:
         return None
 
+
 # Retrieve and parse data for each Pokemon
 pokemon_data = {}
-for i in range(1, 151):
+for i in range(1, 2): # 151
+    #print(i, " of 150    0/4")
     pokemon_url = url + f"pokemon/{i}"
     pokemon_json = get_json_data(pokemon_url)
     if pokemon_json:
@@ -44,6 +47,8 @@ for i in range(1, 151):
             'capacité list': [move['move']['name'] for move in pokemon_json['moves']],
             'talent_id': pokemon_json['abilities'][0]['ability']['name']
         }
+    print("\n\n Pokemon data: ")
+    print(pokemon_json)    # Debug
 
 # Write the Pokemon data to a JSON file
 with open(data_Pokemon, 'w') as f:
@@ -51,7 +56,8 @@ with open(data_Pokemon, 'w') as f:
 
 # Retrieve and parse data for each move
 capacite_data = {}
-for i in range(1, 728):
+for i in range(1, 2): # 728
+    #print(i, " of 727    1/4")
     move_url = url + f"move/{i}"
     move_json = get_json_data(move_url)
     if move_json:
@@ -60,23 +66,36 @@ for i in range(1, 728):
             'pokemon-id': []
         }
         if 'version_group_details' in move_json:
-            capacite_data[move_json['id']]['pokemon-id'] = [version['pokemon']['name'] for version in move_json['version_group_details']]
-    print(move_json,'\n\n')
+            capacite_data[move_json['id']]['pokemon-id'] = [version['pokemon']['name'] for version in
+                                                            move_json['version_group_details']]
+    print("\n\n Capacite data: ")
+    print(move_json)
 
 # Write the move data to a JSON file
 with open(data_Capacite, 'w') as f:
     json.dump(capacite_data, f)
 
-# Retrieve and parse data for each talent
 talent_data = {}
-for i in range(1, 233):
+for i in range(1, 2): # 233
     ability_url = url + f"ability/{i}"
     ability_json = get_json_data(ability_url)
     if ability_json:
+        # Initialize the description_en variable to an empty string
+        description_en = ""
+        # Search for the effect entry in English
+        for effect_entry in ability_json['effect_entries']:
+            if effect_entry['language']['name'] == 'en':
+                description_en = effect_entry['effect']
+                break
         talent_data[ability_json['id']] = {
-            'nom': ability_json['name'],
-            'description': ability_json['effect_entries'][0]['effect']
+            'name': ability_json['name'],
+            'description': description_en
         }
+print("\n\n Talent data: ")
+print(talent_data) # Debug
+
+
+
 
 # Write the talent data to a JSON file
 with open(data_Talent, 'w') as f:
@@ -84,7 +103,8 @@ with open(data_Talent, 'w') as f:
 
 # Retrieve and parse data for each capacite_list
 capacite_list_data = {}
-for i in range(1, 728):
+for i in range(1, 2): # 728
+    #print(i, " of 727   3/4")
     move_url = url + f"move/{i}"
     move_json = get_json_data(move_url)
     if move_json:
@@ -93,9 +113,13 @@ for i in range(1, 728):
             'pokemon_id': []
         }
         if 'version_group_details' in move_json:
-            capacite_list_data[move_json['id']]['pokemon_id'] = [version['pokemon']['name'] for version in move_json['version_group_details']]
-        print(move_json,'\n\n')
+            capacite_list_data[move_json['id']]['pokemon_id'] = [version['pokemon']['name'] for version in
+                                                                 move_json['version_group_details']]
+    print("\n\n Capacite_list data: ")
+    print(move_json)    # Debug
 
 # Write the capacite_list data to a JSON file
 with open(data_Capacite_list, 'w') as f:
     json.dump(capacite_list_data, f)
+
+print("4/4 Done")
