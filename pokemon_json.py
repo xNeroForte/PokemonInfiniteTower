@@ -47,8 +47,6 @@ for i in range(1, 151): # 151
             'capacité list': [move['move']['name'] for move in pokemon_json['moves']],
             'talent_id': pokemon_json['abilities'][0]['ability']['name']
         }
-    print("\n\n Pokemon data: ")
-    print(pokemon_json)    # Debug
 
 # Write the Pokemon data to a JSON file
 with open(data_Pokemon, 'w') as f:
@@ -68,8 +66,6 @@ for i in range(1, 728): # 728
         if 'version_group_details' in move_json:
             capacite_data[move_json['id']]['pokemon-id'] = [version['pokemon']['name'] for version in
                                                             move_json['version_group_details']]
-    print("\n\n Capacite data: ")
-    print(move_json)
 
 # Write the move data to a JSON file
 with open(data_Capacite, 'w') as f:
@@ -92,8 +88,6 @@ for i in range(1, 233): # 233
             'name': ability_json['name'],
             'description': description_en
         }
-print("\n\n Talent data: ")
-print(talent_data) # Debug
 
 
 # Write the talent data to a JSON file
@@ -114,11 +108,7 @@ for i in range(1, 728): # 728
         if 'version_group_details' in move_json:
             capacite_list_data[move_json['id']]['pokemon_id'] = [version['pokemon']['name'] for version in
                                                                  move_json['version_group_details']]
-    print("\n\n Capacite_list data: ")
-    print(move_json)    # Debug
 
 # Write the capacite_list data to a JSON file
 with open(data_Capacite_list, 'w') as f:
     json.dump(capacite_list_data, f)
-
-print("4/4 Done")
